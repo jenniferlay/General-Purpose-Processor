@@ -1,0 +1,27 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY dec4to16 IS
+	PORT(w :IN STD_LOGIC_VECTOR(3 DOWNTO 0); --4 input decoder, 4-bit binary input from student id
+			En		 :IN STD_LOGIC; --enable signal
+			y		 :OUT STD_LOGIC_VECTOR(15 DOWNTO 0)); --microcode output
+	END dec4to16;
+	
+	ARCHITECTURE Behaviour OF dec4to16 IS
+		SIGNAL Enw: STD_logic_vector(4 DOWNTO 0);
+	BEGIN
+			Enw <= En & w(3)&w(2)&w(1)&w(0); 
+			WITH Enw SELECT
+					y <= 	"0000000000000001" WHEN "10000", --state 0
+							"0000000000000010" WHEN "10001", --state 1
+							"0000000000000100" WHEN "10010", --state 2
+							"0000000000001000" WHEN "10011", --state 3
+							"0000000000010000" WHEN "10100", --state 4
+							"0000000000100000" WHEN "10101", --state 5
+							"0000000001000000" WHEN "10110", --state 6
+							"0000000010000000" WHEN "10111", --state 7
+							"0000000100000000" WHEN "11000", --state 8
+							"0000000000000000" WHEN OTHERS; --no states greater than 8
+		END Behaviour;
+		
+		
