@@ -2,9 +2,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 entity fsm is
 	port( 
-			clk 		:in std_logic;
+			Clock 	:in std_logic;
 			data_in 	:in std_logic;
-			reset 	:in std_logic;
 			student_id	:out 	std_logic_vector(3 downto 0);
 			current_state: out std_logic_vector(3 downto 0)); 
 	end entity;
@@ -14,11 +13,11 @@ entity fsm is
 		
 		signal yfsm: state_type := s0;
 	begin
-		process(clk, reset) --
+		process(Clock, data_in) 
 		begin
-			if reset = '0' then -- resets the states to initial states
+			if data_in = '0' then -- resets the states to initial states
 				yfsm <= s0;
-			elsif(clk 'EVENT AND clk = '1') then
+			elsif(Clock 'EVENT AND Clock = '1') then
 				case yfsm is
 						
 						when s0 =>
